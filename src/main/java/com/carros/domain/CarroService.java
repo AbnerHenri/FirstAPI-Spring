@@ -42,6 +42,8 @@ public class CarroService {
             db.setTipo(carro.getTipo());
 
             rep.save(db);
+        }else{
+            throw new RuntimeException("Não foi possivel localizar o carro");
         }
     }
 }
