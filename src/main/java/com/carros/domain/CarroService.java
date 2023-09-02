@@ -18,4 +18,8 @@ public class CarroService {
     public Optional<Carro> getCarro(Long id){
         return rep.findById(id);
     }
+
+     public Iterable<Carro> getTipo(String tipo){
+        return rep.findByTipo(tipo);
+    }
 }
