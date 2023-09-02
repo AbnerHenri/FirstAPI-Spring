@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class CarroService {
@@ -29,5 +30,18 @@ public class CarroService {
 
     public void delCarro(Long id){
         rep.deleteById(id);
+    }
+
+    public void putCarro(Carro carro, Long id){
+        Assert.notNull(id, "Não foi possível achar o carro");
+        Optional<Carro> oCarro = getCarro(id);
+        if(oCarro.isPresent()){
+            Carro db = oCarro.get();
+
+            db.setNome(carro.getNome());
+            db.setTipo(carro.getTipo());
+
+            rep.save(db);
+        }
     }
 }
