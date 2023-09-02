@@ -4,8 +4,11 @@ import com.carros.domain.Carro;
 import com.carros.domain.CarroService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +34,18 @@ public class CarroController {
     @GetMapping("/tipo/{tipo}")
     public Iterable<Carro> buscarTipos(@PathVariable("tipo") String tipo){
         return service.getTipo(tipo);
+    }
+
+    @PostMapping()
+    public String setCarro(@RequestBody Carro carro){
+        service.setCarro(carro);
+        return "Carro Salvo";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delCarro(@PathVariable("id") Long id){
+        service.delCarro(id);
+        return "Carro Deletado";
     }
 }
 

@@ -22,4 +22,12 @@ public class CarroService {
      public Iterable<Carro> getTipo(String tipo){
         return rep.findByTipo(tipo);
     }
+
+    public void setCarro(Carro carro){
+        rep.save(carro);
+    }
+
+    public void delCarro(Long id){
+        rep.deleteById(id);
+    }
 }
