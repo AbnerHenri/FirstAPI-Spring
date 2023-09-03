@@ -61,9 +61,11 @@ public class CarroController {
     }
 
     @DeleteMapping("/{id}")
-    public String delCarro(@PathVariable("id") Long id){
-        service.delCarro(id);
-        return "Carro Deletado";
+    public ResponseEntity<String> delCarro(@PathVariable("id") Long id){
+
+        boolean c = service.delCarro(id);
+        return c ? ResponseEntity.ok("Carro Deletado"):
+            ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")

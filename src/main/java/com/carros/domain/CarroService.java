@@ -33,9 +33,12 @@ public class CarroService {
         return carro.getId();
     }
 
-    public void delCarro(Long id){
+    public boolean delCarro(Long id){
         if(rep.findById(id).isPresent()){
             rep.deleteById(id);
+            return true;
+        }else{
+            return false;
         }
     }
 
