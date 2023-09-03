@@ -67,9 +67,12 @@ public class CarroController {
     }
 
     @PutMapping("/{id}")
-    public String delCarro(@RequestBody Carro carro, @PathVariable("id") Long id){
-        service.putCarro(carro, id);
-        return "Carro Editado";
+    public ResponseEntity<String> putCarro(@RequestBody Carro carro, @PathVariable("id") Long id){
+    
+        carro.setId(id);
+        CarroDTO c = service.putCarro(carro, id);
+        return c != null ? 
+            ResponseEntity.ok("Carro Editado") : ResponseEntity.notFound().build(); 
     }
 
     private URI getURI(Long id){

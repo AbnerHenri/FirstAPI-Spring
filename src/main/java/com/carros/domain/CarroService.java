@@ -52,7 +52,7 @@ public class CarroService {
 
             return CarroDTO.create(db);
         }else{
-            throw new RuntimeException("Não foi possivel localizar o carro");
+            return null;
         }
     }
 }
