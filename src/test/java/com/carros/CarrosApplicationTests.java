@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CarrosApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void myTest(){
+
     }
 
 }

@@ -52,8 +52,8 @@ public class CarroController {
     public ResponseEntity<String> setCarro(@RequestBody Carro carro){
 
         try{
-            Long c = service.setCarro(carro);
-            URI location = getURI(c);
+            CarroDTO c = service.setCarro(carro);
+            URI location = getURI(c.getId());
             return ResponseEntity.created(location).build();
         } catch (Exception ex){
             return ResponseEntity.badRequest().build();

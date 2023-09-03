@@ -28,9 +28,9 @@ public class CarroService {
         return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
     }
 
-    public Long setCarro(Carro carro){
-        rep.save(carro);
-        return carro.getId();
+    public CarroDTO setCarro(Carro carro){
+        Assert.isNull(carro.getId(), "Registro não encontrador");
+        return CarroDTO.create(rep.save(carro));
     }
 
     public boolean delCarro(Long id){
