@@ -33,13 +33,8 @@ public class CarroService {
         return CarroDTO.create(rep.save(carro));
     }
 
-    public boolean delCarro(Long id){
-        if(rep.findById(id).isPresent()){
-            rep.deleteById(id);
-            return true;
-        }else{
-            return false;
-        }
+    public void delCarro(Long id){
+        rep.deleteById(id);
     }
 
     public CarroDTO putCarro(Carro carro, Long id){
