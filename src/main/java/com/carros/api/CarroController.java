@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,10 +49,15 @@ public class CarroController {
     }
 
     @PostMapping()
-    public String setCarro(@RequestBody Carro carro){
+    public ResponseEntity<String> setCarro(@RequestBody Carro carro){
 
-        service.setCarro(carro);
-        return "Carro Salvo";
+        try{
+            Long c = service.setCarro(carro);
+            URI location = getURI(c);
+            return ResponseEntity.created(location).build();
+        } catch (Exception ex){
+            return ResponseEntity.badRequest().build();
+        }     
     }
 
     @DeleteMapping("/{id}")
@@ -63,6 +70,11 @@ public class CarroController {
     public String delCarro(@RequestBody Carro carro, @PathVariable("id") Long id){
         service.putCarro(carro, id);
         return "Carro Editado";
+    }
+
+    private URI getURI(Long id){
+        return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+            .buildAndExpand(id).toUri();
     }
 }
 

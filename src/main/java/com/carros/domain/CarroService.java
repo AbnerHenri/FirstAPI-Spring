@@ -28,8 +28,9 @@ public class CarroService {
         return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
     }
 
-    public void setCarro(Carro carro){
+    public Long setCarro(Carro carro){
         rep.save(carro);
+        return carro.getId();
     }
 
     public void delCarro(Long id){
