@@ -17,15 +17,15 @@ public class CarroService {
     private CarroRepository rep;
 
     public List<CarroDTO> getCarros() {
-        return rep.findAll().stream().map(CarroDTO::new).collect(Collectors.toList());
+        return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
     }
 
-    public Optional<Carro> getCarro(Long id){
-        return rep.findById(id);
+    public Optional<CarroDTO> getCarro(Long id){
+        return rep.findById(id).map(CarroDTO::create);
     }
 
      public List<CarroDTO> getTipo(String tipo){
-        return rep.findByTipo(tipo).stream().map(CarroDTO::new).collect(Collectors.toList());
+        return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
     }
 
     public void setCarro(Carro carro){
@@ -33,12 +33,14 @@ public class CarroService {
     }
 
     public void delCarro(Long id){
-        rep.deleteById(id);
+        if(rep.findById(id).isPresent()){
+            rep.deleteById(id);
+        }
     }
 
-    public void putCarro(Carro carro, Long id){
+    public CarroDTO putCarro(Carro carro, Long id){
         Assert.notNull(id, "Não foi possível achar o carro");
-        Optional<Carro> oCarro = getCarro(id);
+        Optional<Carro> oCarro = rep.findById(id);
         if(oCarro.isPresent()){
             Carro db = oCarro.get();
 
@@ -46,6 +48,8 @@ public class CarroService {
             db.setTipo(carro.getTipo());
 
             rep.save(db);
+
+            return CarroDTO.create(db);
         }else{
             throw new RuntimeException("Não foi possivel localizar o carro");
         }
